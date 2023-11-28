@@ -1,12 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'
+import {StyleSheet} from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import HomeScreen from "./src/components/HomeScreen";
+import CarbonTracker from "./src/components/carbonFootprintTracker/CarbonTracker";
+import WasteReductTips from "./src/components/wasteReductionTips/WasteReductTips";
+import PersonalPage from "./src/components/personalPage/PersonalPage";
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen name={"Personal page"} component={PersonalPage}/>
+        <Drawer.Screen name={"Home"} component={HomeScreen}/>
+        <Drawer.Screen name={"Carbon tracker"} component={CarbonTracker}/>
+        <Drawer.Screen name={"Waste reduction tips"} component={WasteReductTips}/>
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
 
