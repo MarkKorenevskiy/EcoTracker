@@ -15,11 +15,11 @@ export default function CarbonTracker() {
     return (
 
         <Tab.Navigator initialRouteName={"Home"}>
-            <Tab.Screen name={"Flights"} component={FlightCalculator}/>
-            <Tab.Screen name={"Car"} component={CarCalculator}/>
-            <Tab.Screen name={"Home"} component={EmptyScreen}/>
-            <Tab.Screen name={"Motorbike"} component={MotorbikeCalculator}/>
-            <Tab.Screen name={"Public"} component={PublicCalculator}/>
+            <Tab.Screen name={"Flights"} component={FlightCalculator} options={{ headerShown: false }} />
+            <Tab.Screen name={"Car"} component={CarCalculator} options={{ headerShown: false }} />
+            <Tab.Screen name={"Home"} component={EmptyScreen} options={{ headerShown: false }} />
+            <Tab.Screen name={"Motorbike"} component={MotorbikeCalculator} options={{ headerShown: false }} />
+            <Tab.Screen name={"Public"} component={PublicCalculator} options={{ headerShown: false }} />
         </Tab.Navigator>
 
     );
