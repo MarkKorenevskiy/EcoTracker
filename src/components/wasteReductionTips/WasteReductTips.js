@@ -1,11 +1,10 @@
 import {FlatList, Text, View, StyleSheet} from "react-native";
 
-function TipSection({tip}) {
+function TipSection({item}) {
     return (
-        <View style={styles.tipContainer}>
-            <Text>Hello</Text>
-            <Text style={styles.tipTitle}>{tip.title}</Text>
-            <Text style={styles.tipText}>{tip.tip}</Text>
+        <View style={styles.tipContainer} key={item.key}>
+            <Text style={styles.tipTitle}>{item.title}</Text>
+            <Text style={styles.tipText}>{item.tip}</Text>
         </View>
     );
 }
@@ -68,8 +67,15 @@ export default function WasteReductTips() {
     return (
         <View>
             <Text>Waste Reduction Tips</Text>
-            <FlatList data={tips}
-                      renderItem={({tip}) => (<TipSection tip={tip}/>)}/>
+            <FlatList
+                data={tips}
+                renderItem={({item}) => (
+                    <TipSection item={item}/>
+                )}
+                keyExtractor={(item, key) => {
+                    item.key;
+                }}
+            />
         </View>
     );
 }
