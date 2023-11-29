@@ -16,7 +16,6 @@ const Layout = ({ children }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
         backgroundColor: '#abbd8c',
         alignItems: 'center',
         justifyContent: 'center',
@@ -27,6 +26,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '50%',
         opacity: 0.07,
+        resizeMode: 'contain'
     }
 });
 
