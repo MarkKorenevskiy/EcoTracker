@@ -1,8 +1,7 @@
-import {View, Text, TextInput, Button} from "react-native";
+import {Button, Text, TextInput, View} from "react-native";
 import {useState} from "react";
 
-export default function CarCalculator() {
-
+export default function MotorbikeCalculator() {
     const [kms, setKms] = useState(0);
     const [emission, setEmission] = useState(0);
 
@@ -14,14 +13,14 @@ export default function CarCalculator() {
     }
 
     const calculateEmissions = () => {
-        setEmission(kms * 0.3);
+        setEmission(kms * 0.15);
     }
 
     return(
         <View>
-            <Text>Calculate your carbon footprint with your car trips</Text>
+            <Text>Calculate your carbon footprint with your motorbike trips</Text>
             <Text>Mileage {kms} kms</Text>
-            <Text>Total emissions: {emission} kg CO2</Text>
+            <Text>Total emissions: {emission} kg C02</Text>
             <TextInput placeholder={'Enter mileage in kms'} onChangeText={handleTextChange}/>
             <Button title={'Calculate'} onPress={calculateEmissions}/>
         </View>
