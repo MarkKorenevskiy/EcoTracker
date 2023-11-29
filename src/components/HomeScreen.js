@@ -17,7 +17,6 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: 'Arial Black',
         fontSize: 26,
         fontWeight: 'bold',
         color: '#26562f',
@@ -28,6 +27,8 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold',
         textAlign: 'center',
-        marginBottom: 230,
+        marginBottom: 350,
+        lineHeight: 30,
+        padding: 10,
     },
 });
