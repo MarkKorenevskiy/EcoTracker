@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler'
-import {StyleSheet} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import HomeScreen from "./src/components/HomeScreen";
@@ -13,20 +12,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator>
-        <Drawer.Screen name={"Personal page"} component={PersonalPage}/>
+        <Drawer.Screen name={"Personal Page"} component={PersonalPage}/>
         <Drawer.Screen name={"Home"} component={HomeScreen}/>
-        <Drawer.Screen name={"Carbon tracker"} component={CarbonTracker}/>
-        <Drawer.Screen name={"Waste reduction tips"} component={WasteReductTips}/>
+        <Drawer.Screen name={"Carbon Tracker"} component={CarbonTracker}/>
+        <Drawer.Screen name={"Waste Reduction Tips"} component={WasteReductTips}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

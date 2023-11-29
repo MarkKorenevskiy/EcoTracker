@@ -1,10 +1,11 @@
 import {FlatList, Text, View, StyleSheet} from "react-native";
+import Layout from "../Layout";
 
-function TipSection({item}) {
+function TipSection({ tip }) {
     return (
-        <View style={styles.tipContainer} key={item.key}>
-            <Text style={styles.tipTitle}>{item.title}</Text>
-            <Text style={styles.tipText}>{item.tip}</Text>
+        <View style={styles.tipContainer}>
+            <Text style={styles.tipTitle}>{tip.title}</Text>
+            <Text style={styles.tipText}>{tip.tip}</Text>
         </View>
     );
 }
@@ -65,34 +66,37 @@ export default function WasteReductTips() {
     ];
 
     return (
-        <View>
-            <Text>Waste Reduction Tips</Text>
+        <Layout>
             <FlatList
                 data={tips}
-                renderItem={({item}) => (
-                    <TipSection item={item}/>
-                )}
-                keyExtractor={(item, key) => {
-                    item.key;
-                }}
+                renderItem={({ item }) => <TipSection tip={item} />}
+                keyExtractor={item => item.key.toString()}
+                contentContainerStyle={styles.tipsContainer}
+                showsVerticalScrollIndicator={false}
             />
-        </View>
+        </Layout>
     );
 }
 
 const styles = StyleSheet.create({
+    tipsContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+    },
     tipContainer: {
         backgroundColor: '#e0e0e0',
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 5,
+        padding: 15,
+        marginVertical: 8,
+        borderRadius: 10,
     },
     tipTitle: {
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 18,
         marginBottom: 5,
+        color: '#26562f',
     },
     tipText: {
-        fontSize: 14,
-    },
+        fontSize: 16,
+    }
 });
