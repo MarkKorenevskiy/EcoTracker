@@ -60,7 +60,7 @@ const PublicCalculator = () => {
                     placeholder={'Enter mileage in kms'}
                     onChangeText={handleMileageChange}
                     keyboardType={'numeric'}
-                    value={kms}
+                    value={kms.toString()}
                 />
                 <TouchableOpacity style={styles.button} onPress={handleCalculate}>
                     <Text style={styles.buttonText}>Calculate</Text>
