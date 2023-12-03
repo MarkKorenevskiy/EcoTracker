@@ -1,19 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Layout from '../Layout';
+import {saveResultToStorage} from "./CarbonTracker";
+import {useFocusEffect} from "@react-navigation/native";
 
 const CarCalculator = () => {
     const [kms, setKms] = useState('');
     const [emission, setEmission] = useState(0);
 
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setKms('');
+                setEmission(0);
+            }
+        }, [])
+    );
+
     const handleTextChange = (text) => {
         setKms(text.replace(/[^0-9]/g, ''));
     };
 
-    const calculateEmissions = () => {
+    const calculateEmissions = async () => {
+        let result = {};
+
         const kmsNum = parseFloat(kms) || 0;
-        setEmission(kmsNum * 0.3);
+
+        result.date = Date.now();
+        result.type = 'car';
+        result.result = kmsNum * 0.3;
+
+        setEmission(result.result);
         Keyboard.dismiss();
+        await saveResultToStorage(result);
     };
 
     return (

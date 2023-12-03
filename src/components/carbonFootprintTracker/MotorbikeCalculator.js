@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
-import { Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Layout from '../Layout';
+import {saveResultToStorage} from "./CarbonTracker";
+import {useFocusEffect} from "@react-navigation/native";
 
 const MotorbikeCalculator = () => {
     const [kms, setKms] = useState('');
     const [emission, setEmission] = useState(0);
 
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setKms('');
+                setEmission(0);
+            }
+        }, [])
+    );
+
     const handleTextChange = (text) => {
         setKms(text.replace(/[^0-9]/g, ''));
     };
 
-    const calculateEmissions = () => {
+    const calculateEmissions = async () => {
+        let result = {};
         const kmsNum = parseFloat(kms) || 0;
-        setEmission(kmsNum * 0.15);
+
+        result.date = Date.now();
+        result.type = 'bike';
+        result.result = kmsNum * 0.15;
+
+        setEmission(result.result);
+        await saveResultToStorage(result);
     };
 
     return (
@@ -30,7 +48,8 @@ const MotorbikeCalculator = () => {
                 <TouchableOpacity style={styles.button} onPress={calculateEmissions}>
                     <Text style={styles.buttonText}>Calculate</Text>
                 </TouchableOpacity>
-                <Text style={styles.result}>Total Emissions: {emission.toFixed(2)} kg CO<Text style={styles.subscript}>2</Text></Text>
+                <Text style={styles.result}>Total Emissions: {emission.toFixed(2)} kg CO<Text
+                    style={styles.subscript}>2</Text></Text>
             </Layout>
         </TouchableWithoutFeedback>
     );

@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
-import { Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Layout from '../Layout';
+import {saveResultToStorage} from "./CarbonTracker";
+import {useFocusEffect} from "@react-navigation/native";
 
 const PublicCalculator = () => {
     const [transportType, setTransportType] = useState('Train');
     const [kms, setKms] = useState(0);
     const [emission, setEmission] = useState(0);
+
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setTransportType('Train');
+                setKms(0);
+                setEmission(0);
+            }
+        }, [])
+    );
 
     const handleTypeSelect = (value) => {
         setTransportType(value);
@@ -16,27 +28,32 @@ const PublicCalculator = () => {
         setKms(text.replace(/[^0-9]/g, ''));
     };
 
-    const handleCalculate = () => {
+    const handleCalculate = async () => {
         const kmsNum = parseFloat(kms) || 0;
-        let result;
+        let result = {};
+
+        result.date = Date.now();
+        result.type = transportType;
+
         switch (transportType) {
             case 'Train':
-                result = kmsNum * 0.06;
+                result.result = kmsNum * 0.06;
                 break;
             case 'Subway':
-                result = kmsNum * 0.07;
+                result.result = kmsNum * 0.07;
                 break;
             case 'Bus':
-                result = kmsNum * 0.15;
+                result.result = kmsNum * 0.15;
                 break;
             case 'Taxi':
-                result = kmsNum * 0.25;
+                result.result = kmsNum * 0.25;
                 break;
             default:
-                result = kmsNum;
+                result.result = kmsNum;
                 break;
         }
-        setEmission(result);
+        setEmission(result.result);
+        await saveResultToStorage(result);
     };
 
     return (
@@ -65,7 +82,8 @@ const PublicCalculator = () => {
                 <TouchableOpacity style={styles.button} onPress={handleCalculate}>
                     <Text style={styles.buttonText}>Calculate</Text>
                 </TouchableOpacity>
-                <Text style={styles.result}>Total Emissions: {emission.toFixed(2)} kg CO<Text style={styles.subscript}>2</Text></Text>
+                <Text style={styles.result}>Total Emissions: {emission.toFixed(2)} kg CO<Text
+                    style={styles.subscript}>2</Text></Text>
             </Layout>
         </TouchableWithoutFeedback>
     );

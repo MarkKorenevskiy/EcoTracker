@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
-import { Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Layout from '../Layout';
 import axios from 'axios';
+import {saveResultToStorage} from "./CarbonTracker";
+import {useFocusEffect} from "@react-navigation/native";
 
 const FlightCalculator = () => {
     const [departureAirport, setDepartureAirport] = useState('');
     const [arrivalAirport, setArrivalAirport] = useState('');
     const [emission, setEmission] = useState(0);
+
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setDepartureAirport('');
+                setArrivalAirport('');
+                setEmission(0);
+            }
+        }, [])
+    );
 
     const handleDepartureChange = (airport) => {
         setDepartureAirport(airport);
@@ -17,10 +29,16 @@ const FlightCalculator = () => {
     }
 
     const handleCalculate = async () => {
-        let result;
+        let result = {};
         let distance = await getDistanceBetweenCities(departureAirport, arrivalAirport);
-        result = distance * 0.3;
-        setEmission(result);
+
+        result.date = Date.now();
+        result.type = 'flight';
+        result.result = distance * 0.3;
+
+        setEmission(result.result);
+
+        await saveResultToStorage(result);
     }
 
     const getDistanceBetweenCities = async (departure, arrival) => {
@@ -65,7 +83,8 @@ const FlightCalculator = () => {
                 <TouchableOpacity style={styles.button} onPress={handleCalculate}>
                     <Text style={styles.buttonText}>Calculate</Text>
                 </TouchableOpacity>
-                <Text style={styles.result}>Total Emissions: {Math.round((emission + Number.EPSILON) * 100) / 100} kg CO<Text style={styles.subscript}>2</Text></Text>
+                <Text style={styles.result}>Total Emissions: {Math.round((emission + Number.EPSILON) * 100) / 100} kg CO<Text
+                    style={styles.subscript}>2</Text></Text>
             </Layout>
         </TouchableWithoutFeedback>
     );
