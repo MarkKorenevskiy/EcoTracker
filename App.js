@@ -9,6 +9,7 @@ import {useCallback, useEffect, useState} from "react";
 import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {tips} from "./assets/loadData/tips";
+import RecycleMap from "./src/components/recycleMap/recycleMap";
 
 const Drawer = createDrawerNavigator();
 
@@ -50,6 +51,7 @@ export default function App() {
                 <Drawer.Screen name={"Home"} component={HomeScreen}/>
                 <Drawer.Screen name={"Carbon Tracker"} component={CarbonTracker}/>
                 <Drawer.Screen name={"Waste Reduction Tips"} component={WasteReductTips}/>
+                <Drawer.Screen name={"Recycle Map"} component={RecycleMap}/>
             </Drawer.Navigator>
         </NavigationContainer>
     );
