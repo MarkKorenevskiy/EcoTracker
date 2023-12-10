@@ -4,18 +4,17 @@ import * as React from "react";
 import {useState} from "react";
 import {recyclePoints} from "../../../assets/loadData/recyclePoints";
 
-const PointSection = ({point, onPointPress}) => {
+const PointSection = ({ point, onPointPress }) => {
     return (
         <TouchableOpacity
             key={point.id}
             onPress={() => {
                 onPointPress(point)
             }}
+            style={styles.pointItem}
         >
-            <View>
-                <Text>{point.title}</Text>
-                <Text>{point.description}</Text>
-            </View>
+            <Text style={styles.pointTitle}>{point.title}</Text>
+            <Text style={styles.pointDescription}>{point.description}</Text>
         </TouchableOpacity>
     );
 }
@@ -49,7 +48,6 @@ export default function RecycleMap() {
 
     return (
         <View style={styles.container}>
-            <Text>Maps</Text>
             <MapView
                 ref={mapRef}
                 style={styles.map}
@@ -67,29 +65,39 @@ export default function RecycleMap() {
             <FlatList
                 nestedScrollEnabled
                 data={recyclePoints}
-                renderItem={({item}) => <PointSection point={item} onPointPress={handleRecyclePointPress}/>}
+                renderItem={({ item }) => <PointSection point={item} onPointPress={handleRecyclePointPress} />}
                 keyExtractor={item => item.id.toString()}
             />
-
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        // ...StyleSheet.absoluteFillObject,
-        // height: 100,
-        // width: 100,
-        // justifyContent: 'flex-start',
-        // alignItems: 'center',
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#abbd8c'
     },
     map: {
-        height: 500,
+        height: 450,
         width: "90%",
         margin: 10,
         borderRadius: 20
+    },
+    pointItem: {
+        backgroundColor: '#abbd8c',
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius: 10,
+    },
+    pointTitle: {
+        fontSize: 18,
+        color: '#26562f',
+        fontWeight: 'bold',
+    },
+    pointDescription: {
+        fontSize: 16,
+        color: '#26562f',
     },
 });
