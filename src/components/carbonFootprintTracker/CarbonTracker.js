@@ -38,18 +38,6 @@ export async function saveResultToStorage(result) {
     }
 }
 
-export async function saveResultToStorage(result) {
-    try {
-        const jsonString = await AsyncStorage.getItem("tracker_results");
-        const currentResults = jsonString != null ? JSON.parse(jsonString) : [];
-        currentResults.push(result);
-        await AsyncStorage.setItem("tracker_results", JSON.stringify(currentResults));
-        console.log("Tracker result added to AsyncStorage");
-    } catch (err) {
-        console.log(err.message);
-    }
-}
-
 export default function CarbonTracker() {
     return (
 
