@@ -1,8 +1,9 @@
-import {Text, View} from "react-native";
+import {Text, StyleSheet} from "react-native";
 import {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFocusEffect} from "@react-navigation/native";
 import * as React from 'react';
+import Layout from "../Layout";
 
 export default function PersonalPage() {
 
@@ -61,12 +62,47 @@ export default function PersonalPage() {
     }, []);
 
     return (
-        <View>
-            <Text>Personal page</Text>
-            <Text>Your latest tracker result is {latestTrackerResult != null ?
-                JSON.stringify(latestTrackerResult) : "No results"}</Text>
-            <Text>Your daily waste reduction tip: {wasteTip != null ? JSON.stringify(wasteTip) :
-                "Oops! Some gears of this app are not working properly"}</Text>
-        </View>
+        <Layout>
+            <Text style={styles.title}>Personal Page</Text>
+            <Text style={styles.paragraph}>
+                Your latest tracker result:
+            </Text>
+            <Text style={styles.details}>
+                {latestTrackerResult != null ? JSON.stringify(latestTrackerResult, null, 2) : "No results"}
+            </Text>
+            <Text style={styles.paragraph}>
+                Your daily waste reduction tip:
+            </Text>
+            <Text style={[styles.details, { marginBottom: 350 }]}>
+                {wasteTip != null ? JSON.stringify(wasteTip, null, 2) : "Oops! Some gears of this app are not working properly"}
+            </Text>
+        </Layout>
     );
 }
+
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        color: '#26562f',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    paragraph: {
+        fontSize: 20,
+        color: 'black',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 5,
+        lineHeight: 30,
+    },
+    details: {
+        fontSize: 18,
+        color: 'black',
+        fontWeight: 'normal',
+        fontStyle: 'italic',
+        textAlign: 'center',
+        marginBottom: 30,
+        lineHeight: 30,
+    }
+});
