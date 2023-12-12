@@ -68,13 +68,15 @@ export default function PersonalPage() {
                 Your latest tracker result:
             </Text>
             <Text style={styles.details}>
-                {latestTrackerResult != null ? JSON.stringify(latestTrackerResult, null, 2) : "No results"}
+                Was on {new Date(latestTrackerResult?.date).toLocaleString("en-GB")}.
+                You were using {latestTrackerResult?.type}. Your result was {latestTrackerResult?.result} kg CO2e
             </Text>
             <Text style={styles.paragraph}>
                 Your daily waste reduction tip:
             </Text>
             <Text style={[styles.details, { marginBottom: 350 }]}>
-                {wasteTip != null ? JSON.stringify(wasteTip, null, 2) : "Oops! Some gears of this app are not working properly"}
+                {wasteTip != null ? wasteTip.tip :
+                    "Oops! Some gears of this app are not working properly"}
             </Text>
         </Layout>
     );
